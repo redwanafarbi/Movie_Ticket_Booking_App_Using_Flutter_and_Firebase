@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:movie_tickets_booking_app/pages/qr_code_generator.dart';
 import 'package:movie_tickets_booking_app/utils/date.dart';
 import 'package:movie_tickets_booking_app/utils/date_time_extension.dart';
 import 'package:movie_tickets_booking_app/utils/time.dart';
 import '../utils/seat_pattern.dart';
 
 class SeatBookingScreen extends StatefulWidget {
-  String movies;
-
-  SeatBookingScreen({required this.movies});
+  String movieTitle;
+  SeatBookingScreen({required this.movieTitle});
 
   @override
   State<SeatBookingScreen> createState() => _SeatBookingScreenState();
@@ -29,8 +29,8 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
             Navigator.pop(context);
           },
           icon: const Icon(
-            //FontAwesomeIcons.arrowLeft,
              Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
@@ -57,16 +57,20 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
                   children: [
                     const SizedBox(height: 16),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      color: Colors.yellow.shade900,
+                      width: MediaQuery.of(context).size.width * 0.75,
+
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.yellow.shade300,
+                          borderRadius: BorderRadius.circular(5)
+                      ),
                       child: Text(
                         "Screen",
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white),
+                            color: Colors.black87),
                       ),
                     ),
                     const Expanded(child: SizedBox()),
@@ -123,13 +127,13 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
                 ),
                 color: Colors.yellow.shade200,
               ),
-              padding: const EdgeInsets.fromLTRB(24,24,24,10),
-              //padding: const EdgeInsets.fromLTRB(24, 24, 24, 48),
+              padding: const EdgeInsets.fromLTRB(24,10,24,10),
+              //padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Select Date",
+                    "Select Date & Time",
                     style: TextStyle(
                       color: Colors.black87,
                       fontWeight: FontWeight.w800,
@@ -146,7 +150,7 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: List.generate(
-                                    14,
+                                    5,
                                     (index) {
                                       final date = DateTime.now().add(Duration(days: index));
                                       return InkWell(
@@ -162,7 +166,8 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
                           ),
                         );
                       }),
-                  SizedBox(height: 3),
+
+                  SizedBox(height: 3 ),
                   ValueListenableBuilder(
                       valueListenable: selectedTime,
                       builder: (context,value,_) {
@@ -171,10 +176,10 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
                           width: MediaQuery.of(context).size.width,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
-                            children: List.generate(8,
+                            children: List.generate(4,
                                     (index){
                                   final time = TimeOfDay(
-                                  hour: 10 + (index * 2),
+                                  hour: 10 + (index * 3),
                                   minute: 0,
                                   );
                                   return InkWell(
@@ -211,7 +216,7 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
                                 valueListenable: selectedSeat,
                                 builder: (context, value, _) {
                                   return Text(
-                                    "\$${value.length * 100}",
+                                    "BDT ${value.length * 100}",
                                     style:
                                     Theme.of(context).textTheme.headlineSmall,
                                   );
@@ -220,19 +225,24 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
                             ],
                           ),
                       ),
-                      Expanded(child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.yellow.shade600,
-                          borderRadius: BorderRadius.circular(32),
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Book Now",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800,
+                      Expanded(child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>QRCode(movieName: widget.movieTitle)));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.yellow.shade600,
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Book Now",
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                         ),
                       ),),

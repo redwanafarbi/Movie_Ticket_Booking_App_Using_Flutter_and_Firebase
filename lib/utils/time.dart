@@ -16,7 +16,7 @@ class TimeWidget extends StatelessWidget {
       duration: const Duration(milliseconds: 400),
       decoration: BoxDecoration(
         color: isSelected
-            ? Colors.yellow.withOpacity(0.8)
+            ? Colors.black.withOpacity(0.5)
             : Colors.red.withOpacity(0.1),
         borderRadius: BorderRadius.circular(24),
       ),

@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
           image: DecorationImage(
              image: AssetImage("images/background.jpeg"),
             fit: BoxFit.cover,
-            opacity: 0.5,
+            opacity: 0.4,
           ),
         ),
 
@@ -21,11 +21,10 @@ class SplashScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Rajshahi Cineplex",
+            Text("FLIM MATRIX",
             style: TextStyle(
                color: Colors.white,
               fontSize: 50,
-              fontStyle: FontStyle.italic,
               fontWeight: FontWeight.bold,
             ),
             ),
@@ -57,7 +56,7 @@ class SplashScreen extends StatelessWidget {
                   "Get Strated",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
