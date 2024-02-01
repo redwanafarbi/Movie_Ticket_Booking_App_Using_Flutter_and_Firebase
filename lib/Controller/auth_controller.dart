@@ -31,7 +31,7 @@ class AuthController extends GetxController{
       } else {
         isLoging = true;
         update();
-        Get.offAll(() =>  HomeScreen());
+        //Get.offAll(() =>  HomeScreen());
       }
     });
   }

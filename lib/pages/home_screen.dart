@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movie_tickets_booking_app/pages/profile_screen.dart';
@@ -6,9 +7,12 @@ import 'package:movie_tickets_booking_app/pages/splash_screen.dart';
 import '../Service/api_service.dart';
 import '../API/movie_catagory.dart';
 import '../API/upcoming_catagory.dart';
+import '../User_auth/firebase_auth_implementation/firebase_auth_services.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  String userEmail;
+  String userName;
+  HomeScreen({required this.userEmail, required this.userName});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,6 +21,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // List recentMovies = ["Star Wars", "Aladdin", "Avatar", "Batman","Captain Marvel"];
   // List upComingMovies = ["Oppenheimer", "Jumanji", "Frozen", "127 Hours", "Pans Labyrinth", "Beauty And Beast", "Black Panther"];
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    "Name",
+                    widget.userName,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -65,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 5,
                 ),
                 Text(
-                  "Email",
+                  widget.userEmail,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 11,
@@ -92,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w400,
                             ),),
                           actions: [
-                            TextButton(onPressed: (){
+                            TextButton(onPressed: () async {
+                              await _auth.signOut;
                               Navigator.pop(context);
                             }, child: Text("Cancel",
                               style: TextStyle(

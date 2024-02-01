@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:movie_tickets_booking_app/User_Data/user_data.dart';
 import 'package:movie_tickets_booking_app/utils/social.dart';
 import 'package:movie_tickets_booking_app/pages/sign_up_screen.dart';
 import 'package:get/get.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'sign_up_screen.dart';
 import '../User_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import '../utils/form_container_widgets.dart';
 import 'home_screen.dart';
@@ -20,12 +22,16 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+
+  final _userInfo = userInfo();
+
   final FirebaseAuthService _auth = FirebaseAuthService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   bool _isSigning = false;
+
 
   @override
   void dispose() {
@@ -292,7 +298,9 @@ class _LogInScreenState extends State<LogInScreen> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    User? user = await _auth.signInWithEmailAndPassword(email, password);
+    var user = await _auth.signInWithEmailAndPassword(email, password);
+    var Name = await _userInfo.getName(email);
+    //print(user);
 
     setState(() {
       _isSigning = false ;
@@ -300,8 +308,11 @@ class _LogInScreenState extends State<LogInScreen> {
 
     if(user != null){
       print("User is successfully LogIn");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-      //Navigator.pushNamed(context, "/home");
+
+      print(Name.runtimeType);
+
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(userEmail: email, userName: Name,)));
+
     }else{
       print("Some error happend");
     }
@@ -324,8 +335,13 @@ class _LogInScreenState extends State<LogInScreen> {
           accessToken: googleSignInAuthentication.accessToken,
         );
 
-        await _firebaseAuth.signInWithCredential(credential);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+        var userInfo = await _firebaseAuth.signInWithCredential(credential);
+        print(userInfo.user);
+        var userEmailAddress = googleSignInAccount.email;
+        var Name = googleSignInAccount.displayName.toString();
+        print(userEmailAddress);
+
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(userEmail: userEmailAddress,userName: Name,)));
       }
 
     }catch(e){

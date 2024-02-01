@@ -1,9 +1,12 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movie_tickets_booking_app/Controller/auth_controller.dart';
 import 'package:movie_tickets_booking_app/Controller/input_validators.dart';
+import 'package:movie_tickets_booking_app/User_Data/user_data.dart';
 import 'package:movie_tickets_booking_app/pages/login_screen.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +24,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  final _userInfo = userInfo();
+   // var userInformation = Map<dynamic,dynamic>();
 
   final FirebaseAuthService _auth = FirebaseAuthService();
 
@@ -246,11 +252,13 @@ class _SignUpState extends State<SignUp> {
 
     if(user != null){
       print("User is successfully created");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+      _userInfo.data(email.toString(),username.toString());
+
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(userEmail: email,userName: username,)));
     }else{
       print("Some error happend");
     }
 
   }
-
 }
+
