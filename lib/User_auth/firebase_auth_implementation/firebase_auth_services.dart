@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 
-import '../../Global/Common/toast.dart';
-
 class FirebaseAuthService{
   FirebaseAuth _auth = FirebaseAuth.instance;
 

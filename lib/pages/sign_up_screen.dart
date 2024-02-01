@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movie_tickets_booking_app/Controller/auth_controller.dart';
-import 'package:movie_tickets_booking_app/Controller/input_validators.dart';
 import 'package:movie_tickets_booking_app/User_Data/user_data.dart';
 import 'package:movie_tickets_booking_app/pages/login_screen.dart';
 import 'package:get/get.dart';
