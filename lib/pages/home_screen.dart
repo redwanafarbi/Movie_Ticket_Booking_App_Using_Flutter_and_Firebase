@@ -99,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w400,
                             ),),
                           actions: [
-                            TextButton(onPressed: () async {
+                            TextButton(
+                              onPressed: () async {
                               await _auth.signOut;
                               Navigator.pop(context);
                             }, child: Text("Cancel",
@@ -110,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             ),
                             TextButton(
+                              style: TextButton.styleFrom(foregroundColor: Colors.green),
                               onPressed: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>SplashScreen()));
                               }, child: Text("Log Out",

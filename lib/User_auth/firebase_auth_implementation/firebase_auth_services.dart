@@ -46,6 +46,10 @@ class FirebaseAuthService{
     return null ;
   }
 
+  Future<void>signOut() async{
+    await _auth.signOut();
+  }
+
   getErrorSnackBar(String message, _){
     Get.snackbar(
         "Error",
